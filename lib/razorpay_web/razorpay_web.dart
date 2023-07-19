@@ -13,7 +13,7 @@ class RazorpayWeb {
   final void Function(RpayCancelResponse)? onCancel;
   final void Function(RpayFailedResponse)? onFailed;
 
-  late JsRazorpay jsRazorpay;
+  JsRazorpay? _jsRazorpay;
 
   RazorpayWeb({
     this.onSuccess,
@@ -58,46 +58,47 @@ class RazorpayWeb {
 
   Future<Map<String, dynamic>> _stratPayment(Map<String, dynamic> options) {
     final completer = Completer<Map<String, dynamic>>();
-    var dataMap = <String, dynamic>{};
+    Map<String, dynamic> data = {};
 
     options['handler'] = allowInterop((dynamic res) {
       final response = _mapify(res);
 
-      dataMap['status'] = "success";
-      dataMap['desc'] = "Payment success.";
-      dataMap['paymentId'] = response?['razorpay_payment_id'] as String?;
-      dataMap['orderId'] = response?['razorpay_order_id'] as String?;
-      dataMap['signature'] = response?['razorpay_signature'] as String?;
-      completer.complete(dataMap);
+      data['status'] = "success";
+      data['desc'] = "Payment success.";
+      data['paymentId'] = response?['razorpay_payment_id'] as String?;
+      data['orderId'] = response?['razorpay_order_id'] as String?;
+      data['signature'] = response?['razorpay_signature'] as String?;
+      completer.complete(data);
     });
     options['modal.ondismiss'] = allowInterop((response) {
       if (!completer.isCompleted) {
-        dataMap['status'] = "cancelled";
-        dataMap['desc'] = "Payment processing cancelled by user.";
-        completer.complete(dataMap);
+        data['status'] = "cancelled";
+        data['desc'] = "Payment processing cancelled by user.";
+        completer.complete(data);
       }
     });
 
-    jsRazorpay = JsRazorpay(
+    _jsRazorpay = JsRazorpay(
         options: options,
         onFailed: (res) {
           final response = _mapify(res);
 
-          dataMap["status"] = "failed";
-          dataMap["code"] = response?['error']['code'] as String?;
-          dataMap["desc"] = response?['error']['description'] as String?;
-          dataMap["source"] = response?['error']['source'] as String?;
-          dataMap["step"] = response?['error']['step'] as String?;
-          dataMap["reason"] = response?['error']['reason'] as String?;
-          dataMap["orderId"] =
+          data["status"] = "failed";
+          data["code"] = response?['error']['code'] as String?;
+          data["desc"] = response?['error']['description'] as String?;
+          data["source"] = response?['error']['source'] as String?;
+          data["step"] = response?['error']['step'] as String?;
+          data["reason"] = response?['error']['reason'] as String?;
+          data["orderId"] =
               response?['error']['metadata']['order_id'] as String?;
-          dataMap["paymentId"] =
+          data["paymentId"] =
               response?['error']['metadata']['payment_id'] as String?;
-          completer.complete(dataMap);
+          completer.complete(data);
         });
 
-    // open
-    jsRazorpay.open();
+    // open 
+    // _jsRazorpay not null
+    _jsRazorpay?.open();
 
     return completer.future;
   }
@@ -136,6 +137,8 @@ class RazorpayWeb {
   /// RazorpayWeb.close();
   /// ```
   void close() {
-    jsRazorpay.close();
+    if (_jsRazorpay != null) {
+      _jsRazorpay?.close();
+    }
   }
 }
