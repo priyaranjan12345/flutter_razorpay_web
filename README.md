@@ -117,7 +117,7 @@ void getOrderId() {
 
     // customise razorpay payment methods
     // you can modify as per your requirements
-    // ref: [https://razorpay.com/docs/api/payments/payment-links/customise-payment-methods/](https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/configure-payment-methods/)
+   // ref: https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/configure-payment-methods/
     options["config"] = {
       "display": {
         "blocks": {
