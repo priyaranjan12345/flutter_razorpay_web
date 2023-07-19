@@ -3,6 +3,9 @@
 Flutter Razorpay Web Plugin
 </h1>
 
+![48184454-17c1bc80-e358-11e8-8821-269a30935a68](https://github.com/priyaranjan12345/flutter_razorpay_web/assets/47207977/7c107eed-5b02-40a5-b036-cfc21f58b19a)
+
+
 Add this to `dependencies` in your app's `pubspec.yaml`
 
 ```yaml
@@ -110,7 +113,7 @@ void getOrderId() {
 
     // customise razorpay payment methods
     // you can modify as per your requirements
-    // ref: https://razorpay.com/docs/api/payments/payment-links/customise-payment-methods/
+    // ref: [https://razorpay.com/docs/api/payments/payment-links/customise-payment-methods/](https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/configure-payment-methods/)
     options["config"] = {
       "display": {
         "blocks": {
