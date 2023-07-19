@@ -14,6 +14,10 @@ flutter_razorpay_web: ^0.0.1
 
 Run `flutter packages get` in the root directory of your app.
 
+## Demo
+
+![3](https://github.com/priyaranjan12345/flutter_razorpay_web/assets/47207977/29c76cb3-b5bb-406c-9d1d-0fb6844a937a)
+
 ## Usage
 
 Sample code to integrate
