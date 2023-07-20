@@ -125,6 +125,10 @@ class _MyAppState extends State<MyApp> {
   @override
   void dispose() {
     _razorpayWeb.close();
+    amountController.dispose();
+    orderIdController.dispose();
+    keyIdController.dispose();
+    formKey.currentState?.dispose();
 
     super.dispose();
   }
@@ -163,7 +167,9 @@ class _MyAppState extends State<MyApp> {
                   key: formKey,
                   child: ListView(
                     shrinkWrap: true,
-                    padding: const EdgeInsets.symmetric(vertical: 30.0,),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 30.0,
+                    ),
                     children: [
                       Text(
                         'Test Payment',
