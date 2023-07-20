@@ -18,6 +18,37 @@ Run `flutter packages get` in the root directory of your app.
 
 ![3](https://github.com/priyaranjan12345/flutter_razorpay_web/assets/47207977/29c76cb3-b5bb-406c-9d1d-0fb6844a937a)
 
+## Important step
+
+Include checkout.js in index.html file inside your web folder
+
+```html
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+```
+For e.g,-
+
+```html
+<body>
+  <script>
+    window.addEventListener('load', function(ev) {
+      // Download main.dart.js
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
+          });
+        }
+      });
+    });
+  </script>
+  <!-- razorpay checkout lib -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</body>
+```
+
 ## Usage
 
 Sample code to integrate
