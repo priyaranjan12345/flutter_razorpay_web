@@ -2,7 +2,7 @@ name: flutter_razorpay_web
 description: Package for razorpay web.
 version: 0.0.1
 repository: https://github.com/priyaranjan12345/flutter_razorpay_web
-homepage: https://fluttercompletereference.com/
+homepage: https://github.com/priyaranjan12345
 
 environment:
   sdk: '>=2.18.2 <4.0.0'
