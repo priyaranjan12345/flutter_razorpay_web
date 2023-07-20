@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_razorpay_web/flutter_razorpay_web.dart';
 
 void main() {
@@ -14,6 +15,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late RazorpayWeb _razorpayWeb;
+  final orderIdController = TextEditingController();
+  final keyIdController = TextEditingController();
+  final amountController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   void getOrderId() {
     // todo: generate order id as per razorpay official documentation.
@@ -22,9 +27,9 @@ class _MyAppState extends State<MyApp> {
 
     // then call _makePayment
     _makePayment(
-      amount: '100',
-      orderId: 'order_DaZlswtdcn9UNV',
-      keyId: 'test_Lxtrdfhfvdhja',
+      amount: amountController.text,
+      orderId: orderIdController.text,
+      keyId: keyIdController.text,
     );
   }
 
@@ -127,23 +132,128 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+      ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Flutter Razorpay Web'),
+          centerTitle: true,
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text('Running on: \n'),
-            ElevatedButton(
-              onPressed: () {
-                getOrderId();
-              },
-              child: const Text("Make Payment"),
+        body: LayoutBuilder(builder: (context, constraints) {
+          return AnimatedContainer(
+            duration: const Duration(milliseconds: 500),
+            color: Colors.black12,
+            padding: constraints.maxWidth < 500
+                ? EdgeInsets.zero
+                : const EdgeInsets.all(30.0),
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25.0,
+                ),
+                constraints: const BoxConstraints(
+                  maxWidth: 500,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: Form(
+                  key: formKey,
+                  child: ListView(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.symmetric(vertical: 30.0,),
+                    children: [
+                      Text(
+                        'Test Payment',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headlineLarge,
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        controller: amountController,
+                        decoration: const InputDecoration(
+                          hintText: "Enter amount",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30),
+                            ),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter amount';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        controller: orderIdController,
+                        decoration: const InputDecoration(
+                          hintText: "Enter order id",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30),
+                            ),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter order id';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        controller: keyIdController,
+                        decoration: const InputDecoration(
+                          hintText: "Enter key id",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30),
+                            ),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter key id';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      Center(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              getOrderId();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Processing...')),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text('Please enter data to procced')),
+                              );
+                            }
+                          },
+                          child: const Text("Make Payment"),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ],
-        ),
+          );
+        }),
       ),
     );
   }
