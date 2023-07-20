@@ -96,7 +96,7 @@ class RazorpayWeb {
           completer.complete(data);
         });
 
-    // open 
+    // open
     // _jsRazorpay not null
     _jsRazorpay?.open();
 
