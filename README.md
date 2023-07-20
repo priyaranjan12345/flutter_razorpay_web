@@ -20,7 +20,7 @@ Run `flutter packages get` in the root directory of your app.
 
 ## Important step
 
-Include checkout.js in index.html file inside your web folder
+Include `checkout.js` in `index.html` file inside your `web folder`
 
 ```html
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
