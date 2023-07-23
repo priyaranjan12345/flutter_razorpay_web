@@ -12,7 +12,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> {  
   late RazorpayWeb _razorpayWeb;
   final orderIdController = TextEditingController();
   final keyIdController = TextEditingController();
@@ -20,11 +20,11 @@ class _MyAppState extends State<MyApp> {
   final formKey = GlobalKey<FormState>();
 
   void getOrderId() {
-    // todo: generate order id as per razorpay official documentation.
-    // ref: https://razorpay.com/docs/payments/server-integration/nodejs/payment-gateway/build-integration/#13-create-an-order-in-server
-    // implement this on your backend otherwise you may face CORS-policy issue in web
+    /// todo: generate order id as per razorpay official documentation.
+    /// ref: https://razorpay.com/docs/payments/server-integration/nodejs/payment-gateway/build-integration/#13-create-an-order-in-server
+    /// generate order id on your backend otherwise you may face CORS-policy issue in web.
 
-    // then call _makePayment
+    /// after generation of order id, then call _makePayment
     _makePayment(
       amount: amountController.text,
       orderId: orderIdController.text,
@@ -37,9 +37,9 @@ class _MyAppState extends State<MyApp> {
     required String orderId,
     required String keyId,
   }) {
-    // create payment options
-    // you can modify as per your requirements
-    // ref: https://razorpay.com/docs/payments/server-integration/nodejs/payment-gateway/build-integration/#code-to-add-pay-button
+    /// create payment options
+    /// you can modify as per your requirements
+    /// ref: https://razorpay.com/docs/payments/server-integration/nodejs/payment-gateway/build-integration/#code-to-add-pay-button
     final Map<String, dynamic> options = {
       "key": keyId,
       "amount": amount,
@@ -56,9 +56,12 @@ class _MyAppState extends State<MyApp> {
       "hidden": {"contact": false, "email": false}
     };
 
-    // config razorpay payment methods
-    // you can modify as per your requirements
-    // ref: https://razorpay.com/docs/api/payments/payment-links/customise-payment-methods/
+    /// config razorpay payment methods.
+    /// This is a optional step if you want 
+    /// to customize your payment method then use this 
+    /// step otherwise you can skip this step
+    /// you can modify as per your requirements
+    /// ref: https://razorpay.com/docs/api/payments/payment-links/customise-payment-methods/
     options["config"] = {
       "display": {
         "blocks": {
