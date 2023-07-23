@@ -2,6 +2,7 @@ import '../models/rpay_cancel_response.dart';
 import '../models/rpay_failed_response.dart';
 import '../models/rpay_success_response.dart';
 
+/// Flutter plugin for Razorpay Web.
 class RazorpayWeb {
   final void Function(RpaySuccessResponse)? onSuccess;
   final void Function(RpayCancelResponse)? onCancel;
