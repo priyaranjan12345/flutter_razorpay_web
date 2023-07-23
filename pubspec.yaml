@@ -1,6 +1,6 @@
 name: flutter_razorpay_web
-description: Package for razorpay web.
-version: 0.0.1
+description: Package for razorpay web is designed to facilitate smooth integration of Razorpay's payment gateway services specifically for web-based Flutter applications.
+version: 0.0.2
 repository: https://github.com/priyaranjan12345/flutter_razorpay_web
 homepage: https://github.com/priyaranjan12345
 
