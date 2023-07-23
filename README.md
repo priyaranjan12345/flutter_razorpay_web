@@ -152,9 +152,9 @@ void getOrderId() {
 
     // config razorpay payment methods.
     // This is a optional step if you want 
-    // to customize your payment method then use this 
-    // step otherwise you can skip this step
-    // you can modify as per your requirements
+    // to customize your payment methods then use this 
+    // step otherwise you can skip this step.
+    // You can also modify as per your requirements
     // ref: https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/configure-payment-methods/
     options["config"] = {
       "display": {
