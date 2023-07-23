@@ -8,11 +8,18 @@ import '../models/rpay_failed_response.dart';
 import '../models/rpay_success_response.dart';
 import 'js_razorpay.dart';
 
+/// Flutter plugin for Razorpay Web.
 class RazorpayWeb {
+  /// handle event on payment success.
   final void Function(RpaySuccessResponse)? onSuccess;
+
+  /// handle event on payment cancel.
   final void Function(RpayCancelResponse)? onCancel;
+
+  /// handle event on payment failed.
   final void Function(RpayFailedResponse)? onFailed;
 
+  /// instance of JsRazorpay class.
   JsRazorpay? _jsRazorpay;
 
   RazorpayWeb({
@@ -21,6 +28,7 @@ class RazorpayWeb {
     this.onCancel,
   });
 
+  /// Handles checkout response from razorpay gateway.
   void _handleResponse(Map<String, dynamic> result) {
     switch (result['status']) {
       case 'success':
@@ -38,6 +46,7 @@ class RazorpayWeb {
     }
   }
 
+  /// Validate payment options.
   Map<String, dynamic> _validateOptions(Map<String, dynamic> options) {
     if (options['key'] == null) {
       return {
@@ -51,13 +60,18 @@ class RazorpayWeb {
     };
   }
 
+  /// Convert LegacyJavaScriptObject to Dart Map.
   Map<String, dynamic>? _mapify(dynamic obj) {
     if (obj == null) return null;
     return jsonDecode(stringify(obj));
   }
 
+  /// Opens Razorpay checkout.
   Future<Map<String, dynamic>> _stratPayment(Map<String, dynamic> options) {
+    // required for sending value after the data has been populated
     final completer = Completer<Map<String, dynamic>>();
+
+    // return map object
     Map<String, dynamic> data = {};
 
     options['handler'] = allowInterop((dynamic res) {
@@ -78,35 +92,36 @@ class RazorpayWeb {
       }
     });
 
+    // assign options
     _jsRazorpay = JsRazorpay(
-        options: options,
-        onFailed: (res) {
-          final response = _mapify(res);
+      options: options,
+      onFailed: (res) {
+        final response = _mapify(res);
 
-          data["status"] = "failed";
-          data["code"] = response?['error']['code'] as String?;
-          data["desc"] = response?['error']['description'] as String?;
-          data["source"] = response?['error']['source'] as String?;
-          data["step"] = response?['error']['step'] as String?;
-          data["reason"] = response?['error']['reason'] as String?;
-          data["orderId"] =
-              response?['error']['metadata']['order_id'] as String?;
-          data["paymentId"] =
-              response?['error']['metadata']['payment_id'] as String?;
-          completer.complete(data);
-        });
+        data["status"] = "failed";
+        data["code"] = response?['error']['code'] as String?;
+        data["desc"] = response?['error']['description'] as String?;
+        data["source"] = response?['error']['source'] as String?;
+        data["step"] = response?['error']['step'] as String?;
+        data["reason"] = response?['error']['reason'] as String?;
+        data["orderId"] = response?['error']['metadata']['order_id'] as String?;
+        data["paymentId"] =
+            response?['error']['metadata']['payment_id'] as String?;
+        completer.complete(data);
+      },
+    );
 
-    // open
-    // _jsRazorpay not null
+    // open payment gateway.
+    // _jsRazorpay not null.
     _jsRazorpay?.open();
 
     return completer.future;
   }
 
-  /// open razorpay checkout<br>
+  /// open razorpay checkout.<br>
   /// usage:-
   /// ```dart
-  /// RazorpayWeb.open(options);
+  /// razorpayWeb.open(options);
   /// ```
   void open(Map<String, dynamic> options) async {
     Map<String, dynamic> validationResult = _validateOptions(options);
@@ -131,10 +146,10 @@ class RazorpayWeb {
     }
   }
 
-  /// close razorpay checkout<br>
+  /// close razorpay checkout.<br>
   /// usage:-
   /// ```dart
-  /// RazorpayWeb.close();
+  /// razorpayWeb.close();
   /// ```
   void close() {
     if (_jsRazorpay != null) {
