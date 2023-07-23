@@ -3,6 +3,10 @@
 Flutter Razorpay Web Plugin
 </h1>
 
+<p>
+"flutter_razorpay_web" is a Flutter plugin designed to facilitate smooth integration of Razorpay's payment gateway services specifically for web-based Flutter applications.
+</p>
+
 ![48184454-17c1bc80-e358-11e8-8821-269a30935a68](https://github.com/priyaranjan12345/flutter_razorpay_web/assets/47207977/7c107eed-5b02-40a5-b036-cfc21f58b19a)
 
 
@@ -112,9 +116,9 @@ Now open razopay payment gateway
 void getOrderId() {
     // todo: generate order id as per razorpay official documentation.
     // ref: https://razorpay.com/docs/payments/server-integration/nodejs/payment-gateway/build-integration/#13-create-an-order-in-server
-    // implement this on your backend otherwise you may face CORS-policy issue in web
+    // generate order id on your backend otherwise you may face CORS-policy issue in web.
 
-    // then call _makePayment
+    // after generation of order id, then call _makePayment
     _makePayment(
       amount: '100',
       orderId: 'order_DaZlswtdcn9UNV',
@@ -128,7 +132,7 @@ void getOrderId() {
     required String keyId,
   }) {
     // create payment options
-    // you can modify as per your requirements
+    // you can modify as per your requirements.
     // ref: https://razorpay.com/docs/payments/server-integration/nodejs/payment-gateway/build-integration/#code-to-add-pay-button
     final Map<String, dynamic> options = {
       "key": keyId,
@@ -146,9 +150,12 @@ void getOrderId() {
       "hidden": {"contact": false, "email": false}
     };
 
-    // customise razorpay payment methods
+    // config razorpay payment methods.
+    // This is a optional step if you want 
+    // to customize your payment method then use this 
+    // step otherwise you can skip this step
     // you can modify as per your requirements
-   // ref: https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/configure-payment-methods/
+    // ref: https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/configure-payment-methods/
     options["config"] = {
       "display": {
         "blocks": {
