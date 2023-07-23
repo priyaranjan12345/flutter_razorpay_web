@@ -12,7 +12,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {  
+class _MyAppState extends State<MyApp> {
   late RazorpayWeb _razorpayWeb;
   final orderIdController = TextEditingController();
   final keyIdController = TextEditingController();
@@ -57,8 +57,8 @@ class _MyAppState extends State<MyApp> {
     };
 
     /// config razorpay payment methods.
-    /// This is a optional step if you want 
-    /// to customize your payment methods then use this 
+    /// This is a optional step if you want
+    /// to customize your payment methods then use this
     /// step otherwise you can skip this step
     /// you can also modify as per your requirements
     /// ref: https://razorpay.com/docs/api/payments/payment-links/customise-payment-methods/
@@ -155,9 +155,6 @@ class _MyAppState extends State<MyApp> {
                 : const EdgeInsets.all(30.0),
             child: Center(
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 25.0,
-                ),
                 constraints: const BoxConstraints(
                   maxWidth: 500,
                 ),
@@ -171,6 +168,7 @@ class _MyAppState extends State<MyApp> {
                     shrinkWrap: true,
                     padding: const EdgeInsets.symmetric(
                       vertical: 30.0,
+                      horizontal: 25.0,
                     ),
                     children: [
                       Text(
