@@ -4,8 +4,13 @@ import '../models/rpay_success_response.dart';
 
 /// Flutter plugin for Razorpay Web.
 class RazorpayWeb {
+  /// handle event on payment success.
   final void Function(RpaySuccessResponse)? onSuccess;
+
+  /// handle event on payment cancel.
   final void Function(RpayCancelResponse)? onCancel;
+
+  /// handle event on payment failed.
   final void Function(RpayFailedResponse)? onFailed;
 
   RazorpayWeb({
