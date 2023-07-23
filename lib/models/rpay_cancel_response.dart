@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+/// Razorpay cancel response
 class RpayCancelResponse {
   final String status;
   final String desc;

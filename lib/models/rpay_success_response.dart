@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+/// Razorpay success response
 class RpaySuccessResponse {
   final String status;
   final String desc;

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+/// Razorpay failed response
 class RpayFailedResponse {
   final String status;
   final String desc;
