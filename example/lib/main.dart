@@ -58,9 +58,9 @@ class _MyAppState extends State<MyApp> {
 
     /// config razorpay payment methods.
     /// This is a optional step if you want 
-    /// to customize your payment method then use this 
+    /// to customize your payment methods then use this 
     /// step otherwise you can skip this step
-    /// you can modify as per your requirements
+    /// you can also modify as per your requirements
     /// ref: https://razorpay.com/docs/api/payments/payment-links/customise-payment-methods/
     options["config"] = {
       "display": {
