@@ -13,7 +13,7 @@ Flutter Razorpay Web Plugin
 Add this to `dependencies` in your app's `pubspec.yaml`
 
 ```yaml
-flutter_razorpay_web: ^0.0.1
+flutter_razorpay_web: ^0.0.2
 ```
 
 Run `flutter packages get` in the root directory of your app.
