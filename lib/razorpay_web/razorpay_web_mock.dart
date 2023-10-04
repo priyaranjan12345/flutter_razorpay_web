@@ -31,5 +31,5 @@ class RazorpayWeb {
   /// ```dart
   /// RazorpayWeb.close();
   /// ```
-  void close() {}
+  void clear() {}
 }

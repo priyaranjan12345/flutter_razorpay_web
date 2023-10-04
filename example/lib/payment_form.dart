@@ -137,7 +137,7 @@ class _PaymentFormState extends State<PaymentForm> {
 
   @override
   void dispose() {
-    _razorpayWeb.close();
+    _razorpayWeb.clear();
     amountController.dispose();
     orderIdController.dispose();
     keyIdController.dispose();

@@ -48,7 +48,7 @@ class RazorpayWeb {
   }
 
   /// Handles checkout response from razorpay gateway.
-  void _handleResponse(Map<String, dynamic> result) {
+  void handleResponse(Map<String, dynamic> result) {
     switch (result['status']) {
       case 'success':
         final response = RpaySuccessResponse.fromMap(result);
@@ -153,7 +153,7 @@ class RazorpayWeb {
     Map<String, dynamic> validationResult = _validateOptions(options);
 
     if (!validationResult['success']) {
-      _handleResponse({
+      handleResponse({
         "status": "failed",
         "desc": "Key is required. Please check if key is present in options.",
       });
@@ -163,9 +163,9 @@ class RazorpayWeb {
     final response = await _stratPayment(options);
 
     if (response.isNotEmpty) {
-      _handleResponse(response);
+      handleResponse(response);
     } else {
-      _handleResponse({
+      handleResponse({
         "status'": "failed",
         "desc": "Payment failed due to interruption.",
       });
@@ -177,7 +177,7 @@ class RazorpayWeb {
   /// ```dart
   /// razorpayWeb.close();
   /// ```
-  void close() {
+  void clear() {
     if (_jsRazorpay != null) {
       _jsRazorpay?.close();
     }
