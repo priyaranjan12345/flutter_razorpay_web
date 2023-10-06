@@ -28,6 +28,25 @@ class RazorpayWeb {
     this.onCancel,
   });
 
+  /// check retry in option
+  bool _retryStatus(dynamic options) {
+    bool isRetryEnabled = true;
+
+    if (options.containsKey('retry')) {
+      if (options['retry'] is bool) {
+        isRetryEnabled = options['retry'];
+      } else {
+        if (options['retry'] is Map<String, dynamic>) {
+          if (options['retry'].containsKey('enabled')) {
+            isRetryEnabled = options['retry']['enabled'] ?? true;
+          }
+        }
+      }
+    }
+
+    return isRetryEnabled;
+  }
+
   /// Handles checkout response from razorpay gateway.
   void _handleResponse(Map<String, dynamic> result) {
     switch (result['status']) {
@@ -74,6 +93,10 @@ class RazorpayWeb {
     // return map object
     Map<String, dynamic> data = {};
 
+    /// check retry enabled in options
+    /// true (default): Enables customers to retry payments.
+    bool isRetryEnabled = _retryStatus(options);
+
     options['handler'] = allowInterop((dynamic res) {
       final response = _mapify(res);
 
@@ -96,18 +119,21 @@ class RazorpayWeb {
     _jsRazorpay = JsRazorpay(
       options: options,
       onFailed: (res) {
-        final response = _mapify(res);
+        if (!isRetryEnabled) {
+          final response = _mapify(res);
 
-        data["status"] = "failed";
-        data["code"] = response?['error']['code'] as String?;
-        data["desc"] = response?['error']['description'] as String?;
-        data["source"] = response?['error']['source'] as String?;
-        data["step"] = response?['error']['step'] as String?;
-        data["reason"] = response?['error']['reason'] as String?;
-        data["orderId"] = response?['error']['metadata']['order_id'] as String?;
-        data["paymentId"] =
-            response?['error']['metadata']['payment_id'] as String?;
-        completer.complete(data);
+          data["status"] = "failed";
+          data["code"] = response?['error']['code'] as String?;
+          data["desc"] = response?['error']['description'] as String?;
+          data["source"] = response?['error']['source'] as String?;
+          data["step"] = response?['error']['step'] as String?;
+          data["reason"] = response?['error']['reason'] as String?;
+          data["orderId"] =
+              response?['error']['metadata']['order_id'] as String?;
+          data["paymentId"] =
+              response?['error']['metadata']['payment_id'] as String?;
+          completer.complete(data);
+        }
       },
     );
 
