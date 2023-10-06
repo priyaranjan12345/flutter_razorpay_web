@@ -4,8 +4,9 @@
 
 ## 0.0.2
 
-- conditional import added, so that it will not give any error when you run your project on mobile.
+- Conditional import added, so that it will not give any error when you run your project on mobile.
+- Note: Its only for web. It will not work on mobile(Android/iOS).
 
 ## 0.0.1
 
-- initial release.
+- Initial release.
