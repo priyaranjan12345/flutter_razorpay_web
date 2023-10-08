@@ -100,12 +100,12 @@ Configure methods
   }
 ```
 
-Close 
+Clear/close
 
 ```dart
   @override
   void dispose() {
-    _razorpayWeb.close();
+    _razorpayWeb.clear();
 
     super.dispose();
   }
@@ -114,11 +114,11 @@ Close
 Now open razopay payment gateway
 ```dart
 void getOrderId() {
-    // todo: generate order id as per razorpay official documentation.
-    // ref: https://razorpay.com/docs/payments/server-integration/nodejs/payment-gateway/build-integration/#13-create-an-order-in-server
-    // generate order id on your backend otherwise you may face CORS-policy issue in web.
+    /// todo: generate order id as per razorpay official documentation.
+    /// ref: https://razorpay.com/docs/payments/server-integration/nodejs/payment-gateway/build-integration/#13-create-an-order-in-server
+    /// generate order id on your backend otherwise you may face CORS-policy issue in web.
 
-    // after generation of order id, then call _makePayment
+    /// after generation of order id, then call _makePayment
     _makePayment(
       amount: '100',
       orderId: 'order_DaZlswtdcn9UNV',
@@ -131,9 +131,9 @@ void getOrderId() {
     required String orderId,
     required String keyId,
   }) {
-    // create payment options
-    // you can modify as per your requirements.
-    // ref: https://razorpay.com/docs/payments/server-integration/nodejs/payment-gateway/build-integration/#code-to-add-pay-button
+    /// create payment options
+    /// you can modify as per your requirements.
+    /// Ref: https://razorpay.com/docs/payments/server-integration/nodejs/payment-gateway/build-integration/#code-to-add-pay-button
     final Map<String, dynamic> options = {
       "key": keyId,
       "amount": amount,
@@ -150,12 +150,12 @@ void getOrderId() {
       "hidden": {"contact": false, "email": false}
     };
 
-    // config razorpay payment methods.
-    // This is a optional step if you want 
-    // to customize your payment methods then use this 
-    // step otherwise you can skip this step.
-    // You can also modify as per your requirements
-    // ref: https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/configure-payment-methods/
+    /// config razorpay payment methods.
+    /// This is a "optional" step if you want
+    /// to customize your payment methods then use this step "options["config"]",
+    /// otherwise you can skip this step .
+    /// You can also modify as per your requirements.
+    /// Ref: https://razorpay.com/docs/api/payments/payment-links/customise-payment-methods/
     options["config"] = {
       "display": {
         "blocks": {
@@ -191,5 +191,6 @@ void getOrderId() {
         "preferences": {"show_default_blocks": false}
       }
     };
+  }
 ```
 

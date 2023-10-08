@@ -87,10 +87,10 @@ class RazorpayWeb {
 
   /// Opens Razorpay checkout.
   Future<Map<String, dynamic>> _stratPayment(Map<String, dynamic> options) {
-    // required for sending value after the data has been populated
+    /// required for sending value after the data has been populated
     final completer = Completer<Map<String, dynamic>>();
 
-    // return map object
+    /// return map object
     Map<String, dynamic> data = {};
 
     /// check retry enabled in options
@@ -115,7 +115,7 @@ class RazorpayWeb {
       }
     });
 
-    // assign options
+    /// assign options
     _jsRazorpay = JsRazorpay(
       options: options,
       onFailed: (res) {
@@ -123,22 +123,26 @@ class RazorpayWeb {
           final response = _mapify(res);
 
           data["status"] = "failed";
-          data["code"] = response?['error']['code'] as String?;
-          data["desc"] = response?['error']['description'] as String?;
-          data["source"] = response?['error']['source'] as String?;
-          data["step"] = response?['error']['step'] as String?;
-          data["reason"] = response?['error']['reason'] as String?;
-          data["orderId"] =
-              response?['error']['metadata']['order_id'] as String?;
-          data["paymentId"] =
-              response?['error']['metadata']['payment_id'] as String?;
+
+          final error = response?['error'];
+
+          data["code"] = error['code'] as String?;
+          data["desc"] = error['description'] as String?;
+          data["source"] = error['source'] as String?;
+          data["step"] = error['step'] as String?;
+          data["reason"] = error['reason'] as String?;
+
+          final metadata = error['metadata'];
+
+          data["orderId"] = metadata['order_id'] as String?;
+          data["paymentId"] = metadata['payment_id'] as String?;
           completer.complete(data);
         }
       },
     );
 
-    // open payment gateway.
-    // _jsRazorpay not null.
+    /// open payment gateway.
+    /// _jsRazorpay not null.
     _jsRazorpay?.open();
 
     return completer.future;
@@ -177,7 +181,7 @@ class RazorpayWeb {
   /// ```dart
   /// razorpayWeb.close();
   /// ```
-  void close() {
+  void clear() {
     if (_jsRazorpay != null) {
       _jsRazorpay?.close();
     }
